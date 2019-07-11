@@ -70,7 +70,7 @@ defmodule Ecto.Rescope.MixProject do
       source_ref: "v#{@version}",
       canonical: "http://hexdocs.pm/ecto_rescope",
       extra_section: "GUIDES",
-      source_url: "https://github.com/elixir-ecto/ecto",
+      source_url: "https://github.com/erikreedstrom/ecto_rescope",
       extras: extras(),
       groups_for_extras: groups_for_extras(),
       groups_for_modules: groups_for_modules()

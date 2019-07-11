@@ -57,7 +57,7 @@ defmodule Ecto.Rescope do
   `unscoped/0` and `scoped/0`. These are used in situations where the overridden scope is
   either undesirable, or caveats exist that prevent use of the rescoped query.
 
-  > TODO: Add examples of caveats
+  See: [README](readme.html#caveats) for caveats
   """
   defmacro rescope(scope_fn) do
     quote do
