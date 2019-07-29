@@ -15,8 +15,8 @@ defmodule Ecto.Rescope do
       end
 
   This has a downside in that the schema cannot define a default scope for
-  all queries to follow. For instance, perhaps one wants to ensure only soft-deleted
-  records are returned by default. To accomplish this, one might exclude
+  all queries to follow. For instance, perhaps one wants to ensure that soft-deleted
+  records are not returned by default. To accomplish this, one might exclude
   any record with an `is_deleted` field set to `true`.
 
       def without_deleted(query) do
