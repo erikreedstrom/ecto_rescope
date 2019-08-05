@@ -2,6 +2,9 @@ language: elixir
 sudo: false
 script: mix test
 
+services:
+  - postgresql
+
 matrix:
   include:
     - elixir: "1.9"
