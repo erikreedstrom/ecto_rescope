@@ -38,8 +38,7 @@ defmodule Ecto.RescopeTest do
 
     test "provides `scoped/0` function", %{alice: alice, bob: bob, charlie: charlie} do
       # Demonstrates need to assert scoping with `from` and `join` macros
-      users =
-        TestRepo.all(from(q in User.scoped(), join: t in ^Team.scoped(), on: t.id == q.team_id))
+      users = TestRepo.all(from(q in User.scoped(), join: t in ^Team.scoped(), on: t.id == q.team_id))
 
       assert Enum.member?(users, alice)
       refute Enum.member?(users, bob)
