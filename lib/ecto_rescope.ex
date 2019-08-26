@@ -2,7 +2,7 @@ defmodule Ecto.Rescope do
   @moduledoc """
   Rescopes the default query on an Ecto schema.
 
-  An Ecto Schmea is typically scoped by the `Ecto.Schema.schema/2` macro,
+  An Ecto Schema is typically scoped by the `Ecto.Schema.schema/2` macro,
   which defines the query as:
 
       def __schema__(:query) do
@@ -71,7 +71,7 @@ defmodule Ecto.Rescope do
       def unscoped(), do: Ecto.Queryable.to_query({__schema__(:source), __MODULE__})
 
       # Invoke the defined query object from the module and pass
-      # to the defalt scoping function for composition.
+      # to the default scoping function for composition.
       def __schema__(:query), do: unquote(scope_fn).(super(:query))
 
       # Ensure we still allow fields, assocs, and embeds to process
