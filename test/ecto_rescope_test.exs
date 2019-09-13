@@ -62,6 +62,24 @@ defmodule Ecto.RescopeTest do
       assert Enum.member?(users, bob)
       assert Enum.member?(users, charlie)
     end
+
+    test "raises an exception with an invalid term" do
+      assert_raise RuntimeError, ~r/#{__MODULE__}/, fn ->
+        defmodule TestSchema do
+          use Ecto.Rescope
+          @rescope :foo
+        end
+      end
+    end
+
+    test "raises an exception with an anonymous function" do
+      assert_raise RuntimeError, ~r/#{__MODULE__}/, fn ->
+        defmodule TestSchema do
+          use Ecto.Rescope
+          @rescope fn x -> x end
+        end
+      end
+    end
   end
 
   ## PRIVATE FUNCTIONS
