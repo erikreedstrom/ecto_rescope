@@ -1,5 +1,15 @@
 # Changelog for v0.1.x
 
+## v0.1.2
+
+### Fixes
+
+  * Fix typo in docs
+
+### Enhancements
+
+  * [Ecto.Rescope] Support for `@rescope` decorator
+
 ## v0.1.1
 
 ### Fixes
