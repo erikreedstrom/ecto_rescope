@@ -25,11 +25,28 @@ defmodule Ecto.Rescope do
 
   ## Usage
 
-  By using the `rescope/1` macro provided by `Ecto.Rescope`, one can override by
-  passing a function that takes an `Ecto.Query` struct as the sole
-  argument. This function must return an `Ecto.Query` struct.
+  By using the `rescope/1` attribute or macro provided by `Ecto.Rescope`,
+  one can override by passing a function that takes an `Ecto.Query` struct
+  as the sole argument. This function must return an `Ecto.Query` struct.
 
-  > NOTE: The macro must be invoked after the `Ecto.Schema.schema/2` macro.
+  > NOTE: The macro must be invoked after the `Ecto.Schema.schema/2` macro unless using an attribute.
+  > NOTE: The @rescope attribute does _not_ accept anonymous functions.
+
+
+  ### Example
+
+      use Ecto.Rescope
+
+      @rescope &ThisModule.without_deleted/1
+      schema "user" do
+        field(:is_deleted, :boolean)
+      end
+
+      def without_deleted(query) do
+        from(q in query, where: q.is_deleted == false)
+      end
+
+  Using the macro directly.
 
   ### Example
 
@@ -47,6 +64,28 @@ defmodule Ecto.Rescope do
 
   At this point, any queries using the schema will now be defined with the new default scope.
   """
+
+  defmacro __before_compile__(_env) do
+    quote do
+      unless is_nil(Module.get_attribute(__MODULE__, :rescope)) do
+        # Anonymous functions are not supported as module attributes.
+        if is_function(@rescope) && Function.info(@rescope, :type) == {:type, :external} do
+          unquote(__MODULE__).rescope(@rescope)
+        else
+          raise """
+          Invalid term given to rescope for schema #{__MODULE__}. Value must be a compile-time function in the format `&Mod.fun/arity`.
+          Anonymous functions (fn x -> x end) are not supported as a rescope attribute.
+          """
+        end
+      end
+    end
+  end
+
+  defmacro __using__(_opts) do
+    quote do
+      @before_compile unquote(__MODULE__)
+    end
+  end
 
   @doc """
   Resets the default query on the Ecto schema.

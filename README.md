@@ -51,6 +51,29 @@ defmodule User do
 end
 ```
 
+It is possible to add a `@rescope` attribute to your schema with an external function.
+
+```elixir
+defmodule SoftDelete do
+  import Ecto.Query, only: [from: 2]
+
+  def exclude_deleted(query) do
+    from(q in query, where: q.is_deleted == false)
+  end
+end
+
+defmodule User do
+  use Ecto.Schema
+  use Ecto.Rescope
+
+  @rescope &SoftDelete.exclude_deleted/1
+  schema "users" do
+    field(:is_deleted, :boolean)
+  end
+
+end
+```
+
 When we want to query without the default scoping applied, we can do so with `unscoped/0`, 
 which is added by the `rescope/1` macro.
 
