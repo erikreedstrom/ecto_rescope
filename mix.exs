@@ -1,7 +1,7 @@
 defmodule Ecto.Rescope.MixProject do
   use Mix.Project
 
-  @version "0.1.1"
+  @version "0.1.2"
 
   def project do
     [
@@ -91,7 +91,7 @@ defmodule Ecto.Rescope.MixProject do
 
   defp package do
     [
-      maintainers: ["Erik Reedstrom"],
+      maintainers: ["Erik Reedstrom", "Christian Green"],
       licenses: ["Apache 2.0"],
       links: %{"GitHub" => "https://github.com/erikreedstrom/ecto_rescope"},
       files: ~w(lib .formatter.exs mix.exs README* LICENSE* CHANGELOG*)
